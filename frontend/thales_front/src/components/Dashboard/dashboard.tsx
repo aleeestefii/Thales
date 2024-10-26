@@ -1,6 +1,4 @@
-
 "use client";
-
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -14,12 +12,10 @@ import {
 } from 'chart.js';
 import './dashboard.css';
 
-// Registrar las escalas y elementos necesarios
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-//Datos aleatorios de Thales
 const topCategoriaData = {
-  labels: ["DELITO DE BAJO IMPACTO", "ROBO A PASAJERO", "ROBO A TRANSEUNTE", "HOMICIDIO DOLOSO", "LESIONES DOLOSAS"],
+  labels: ["DELITO DE BAJO IMPACTO", "ROBO A PASAJERO A BORDO DE METRO", "ROBO A TRANSEUNTE", "HOMICIDIO DOLOSO", "VIOLACIÓN"],
   datasets: [
     {
       label: 'Número de Casos',
@@ -30,7 +26,7 @@ const topCategoriaData = {
 };
 
 const topTipoData = {
-  labels: ["ROBO DE VEHICULO", "LESIONES CULPOSAS", "HOMICIDIOS", "PERDIDA DE LA VIDA", "ROBO A TRANSEUNTE"],
+  labels: ["ROBO DE VEHICULO", "LESIONES CULPOSAS", "HOMICIDIOS", "VIOLACIÓN", "ROBO A TRANSEUNTE"],
   datasets: [
     {
       label: 'Número de Casos',
@@ -41,7 +37,7 @@ const topTipoData = {
 };
 
 const horariosData = {
-  labels: Array.from({ length: 24 }, (_, i) => i.toString()),
+  labels: Array.from({ length: 24 }, (_, i) => i.toString() + ":00"),
   datasets: [
     {
       label: 'Número de Delitos',
@@ -54,24 +50,39 @@ const horariosData = {
 const Dashboard = () => {
   return (
     <div className="dashboard">
-      <h2>Categoría de Delito (Top 5)</h2>
-      <div className="chart-container">
-        <Bar data={topCategoriaData} options={{ indexAxis: 'y', plugins: { legend: { display: false } } }} />
+      <div className="navbar">
+        <span>HOME</span>
+        <span>REPORTES</span>
+        <span>MAPA</span>
+        <span>GRÁFICAS</span>
+        <button className="search-button">BUSCAR</button>
       </div>
 
-      <h2>Tipo de Delito (Top 5)</h2>
-      <div className="chart-container">
-        <Bar data={topTipoData} options={{ indexAxis: 'y', plugins: { legend: { display: false } } }} />
-      </div>
+      <div className="content">
+        <div className="map-section">
+          <div className="map-placeholder">
+            <p>Mapa del Delito </p>
+          </div>
+        </div>
+        
+        <div className="charts-section">
+          <h2>Categoría de Delito</h2>
+          <div className="chart-container">
+            <Bar data={topCategoriaData} options={{ indexAxis: 'y', plugins: { legend: { display: false } } }} />
+          </div>
 
-      <h2>Horarios del Delito</h2>
-      <div className="chart-container">
-        <Bar data={horariosData} options={{ plugins: { legend: { display: false } } }} />
-      </div>
+          <h2>Tipo de Delito</h2>
+          <div className="chart-container">
+            <Bar data={topTipoData} options={{ indexAxis: 'y', plugins: { legend: { display: false } } }} />
+          </div>
+        </div>
 
-      {/* Espacio para el mapa con api de googleMaps */}
-      <div className="map-placeholder">
-        <p>Mapa del Delito (placeholder)</p>
+        <div className="horarios-section">
+          <h2>Horarios del Delito</h2>
+          <div className="chart-container">
+            <Bar data={horariosData} options={{ plugins: { legend: { display: false } } }} />
+          </div>
+        </div>
       </div>
     </div>
   );
